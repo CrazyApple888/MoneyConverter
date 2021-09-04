@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Money Converter</string>
+    <string name="list_string">List</string>
+    <string name="converter_string">Converter</string>
+</resources>
