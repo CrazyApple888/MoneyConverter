@@ -3,5 +3,5 @@
     <string name="list_string">List</string>
     <string name="converter_string">Converter</string>
     <string name="currency_value_RUB">%s RUB</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="coming_soon_message">Coming soon...</string>
 </resources>

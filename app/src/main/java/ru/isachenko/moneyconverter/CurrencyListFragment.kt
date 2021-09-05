@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
 
 class CurrencyListFragment : Fragment() {
@@ -25,6 +26,7 @@ class CurrencyListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerView.adapter = WalletAdapter()
+        binding.recyclerView.adapter = WalletAdapter(this.requireContext())
+        binding.recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
     }
 }

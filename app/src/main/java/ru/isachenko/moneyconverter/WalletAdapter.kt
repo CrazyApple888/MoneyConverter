@@ -1,15 +1,25 @@
 package ru.isachenko.moneyconverter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class WalletAdapter :
+class WalletAdapter(private val ctx: Context) :
     RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
-    private val currencies = CurrencyGetter.currencies
+    private var currencies = emptyList<Wallet>()
+
+    init {
+        CurrenciesDownloader.asyncGet(ctx, updater = {
+            currencies = it
+            notifyDataSetChanged()
+        })
+    }
+
+    override fun getItemCount() = currencies.size
 
     class WalletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val charCode: TextView = view.findViewById(R.id.char_code)
@@ -26,6 +36,4 @@ class WalletAdapter :
         holder.charCode.text = item.charCode
         holder.value.text = item.value.toString()
     }
-
-    override fun getItemCount() = currencies.size
 }
