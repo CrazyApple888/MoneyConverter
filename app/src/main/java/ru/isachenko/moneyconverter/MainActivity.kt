@@ -2,7 +2,8 @@ package ru.isachenko.moneyconverter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import ru.isachenko.moneyconverter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,21 +15,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        CurrencyGetter.downloadData(this)
-        binding.bottomMenuBar.setOnItemSelectedListener { setOnItemSelectedListener(it) }
-    }
+        //CurrencyGetter.downloadData(this)
 
-    private fun setOnItemSelectedListener(item: MenuItem): Boolean {
-        //TODO
-        when (item.itemId) {
-            R.id.list_bottom_button -> {
-                binding.textView.text = CurrencyGetter.getSmth()
-                return true
-            }
-            else -> {
-                binding.textView.text = "ABOBA"
-            }
-        }
-        return true
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        NavigationUI.setupWithNavController(binding.bottomMenuBar, navController)
     }
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/list_bottom_button"
+        android:id="@+id/currencyListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_wallet_list"
         android:title="@string/list_string"
         />
 
     <item
-        android:id="@+id/converter_bottom_button"
+        android:id="@+id/converterFragment"
         android:enabled="true"
         android:icon="@drawable/ic_converter"
         android:title="@string/converter_string"

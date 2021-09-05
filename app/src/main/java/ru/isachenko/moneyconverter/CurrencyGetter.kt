@@ -9,11 +9,37 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
+//TODO refactor class
 //Singleton class for getting currencies
 object CurrencyGetter {
     private const val url = "https://www.cbr-xml-daily.ru/daily_json.js"
-    private var data: List<Wallet>? = null
     private lateinit var currenciesJson: JSONObject
+    private var _currencies: List<Wallet>? = null
+    val currencies: List<Wallet>
+        get() {
+            if (_currencies != null) {
+                return _currencies!!
+            }
+            //Codes of currencies
+            val keys = currenciesJson.getJSONObject("Valute").keys()
+            //JSONObjects of currencies
+            val valutes = currenciesJson.getJSONObject("Valute")
+            val mutableData = mutableListOf<Wallet>()
+            for (i in 0 until valutes.length()) {
+                val charCode = keys.next()
+                val currentValute = valutes.getJSONObject(charCode)
+                mutableData.add(
+                    Wallet(
+                        charCode,
+                        currentValute.getString("Name"),
+                        currentValute.getDouble("Value"),
+                        currentValute.getDouble("Previous")
+                    )
+                )
+            }
+            _currencies = mutableData.toList()
+            return _currencies!!
+        }
 
     fun downloadData(ctx: Context) {
         //TODO
@@ -28,30 +54,5 @@ object CurrencyGetter {
                 Toast.makeText(ctx as Activity, "Can't update data", Toast.LENGTH_LONG).show()
             })
         Volley.newRequestQueue(ctx).add(request)
-    }
-
-    fun getCurrencies() {
-        //TODO return currencies
-        val keys = currenciesJson.getJSONObject("Valute").keys()
-        val valutes = currenciesJson.getJSONObject("Valute")
-        for (i in 0..valutes.length()) {
-            //return valutes.getJSONObject(keys.next().toString())["CharCode"].toString()
-        }
-
-    }
-
-    //TODO delete this
-    fun getSmth() : String {
-        val keys = currenciesJson.getJSONObject("Valute").keys()
-        val valutes = currenciesJson.getJSONObject("Valute")
-        for (i in 0..valutes.length()) {
-            return valutes.getJSONObject(keys.next().toString()).getString("Name")
-        }
-        return "a"
-    }
-
-    fun getInfo(): List<Wallet> {
-        TODO("Not yet implemented")
-
     }
 }
