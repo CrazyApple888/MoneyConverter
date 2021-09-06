@@ -3,7 +3,6 @@ package ru.isachenko.moneyconverter
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
 
@@ -26,6 +25,7 @@ class ConverterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val items = "TODO".toCharArray().asList()
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
-        binding.autoCompleteTextView.setAdapter(adapter)
+        binding.dropdownConvertFrom.setAdapter(adapter)
+        binding.dropdownConvertTo.setAdapter(adapter)
     }
 }

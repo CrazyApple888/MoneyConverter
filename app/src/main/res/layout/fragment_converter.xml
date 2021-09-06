@@ -9,10 +9,10 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/convert_from"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="@string/currency_value_RUB"
+        android:hint="TODO"
         android:inputType="number"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +24,11 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/convert_from"
-        app:layout_constraintStart_toEndOf="@id/convert_from"
-        app:layout_constraintTop_toTopOf="@+id/convert_from">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/convert_from">
 
         <AutoCompleteTextView
-            android:id="@+id/dropdown_from"
+            android:id="@+id/dropdown_convert_from"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -39,17 +38,18 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/convert_to"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:hint="@string/currency_value_RUB"
-        android:inputType="number"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/convert_from" />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toEndOf="@id/convert_value_from"
+        app:layout_constraintEnd_toStartOf="@id/convert_value_to"
+        app:layout_constraintTop_toBottomOf="@id/convert_from"
+        app:layout_constraintBottom_toTopOf="@id/convert_to"
+        android:src="@drawable/ic_arrow_to"
+        android:scaleType="fitCenter"
+        >
+
+    </ImageView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/convert_value_to"
@@ -57,9 +57,8 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/convert_to"
-        app:layout_constraintStart_toEndOf="@id/convert_to"
-        app:layout_constraintTop_toTopOf="@+id/convert_to">
+        app:layout_constraintTop_toBottomOf="@+id/convert_from"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <AutoCompleteTextView
             android:id="@+id/dropdown_convert_to"
@@ -71,6 +70,30 @@
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/convert_to"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:hint="@string/currency_value_RUB"
+        android:inputType="number"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/convert_value_from">
+
+    </com.google.android.material.textfield.TextInputEditText>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/convert_to"
+        android:layout_margin="10dp"
+        android:hint="TODO">
+
+    </com.google.android.material.button.MaterialButton>
 
     <TextView
         android:layout_width="match_parent"
