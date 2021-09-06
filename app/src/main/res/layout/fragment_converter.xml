@@ -6,17 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ConverterFragment">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/convert_from"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="TODO"
-        android:inputType="number"
+        android:hint="@string/convert_from_hint"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/convert_from_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/convert_value_from"
@@ -32,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="From"
+            android:hint="@string/convert_from_dropdown_hint"
             android:inputType="none"
             android:textSize="15sp" />
 
@@ -41,13 +48,12 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintStart_toEndOf="@id/convert_value_from"
-        app:layout_constraintEnd_toStartOf="@id/convert_value_to"
-        app:layout_constraintTop_toBottomOf="@id/convert_from"
-        app:layout_constraintBottom_toTopOf="@id/convert_to"
-        android:src="@drawable/ic_arrow_to"
         android:scaleType="fitCenter"
-        >
+        android:src="@drawable/ic_arrow_to"
+        app:layout_constraintBottom_toTopOf="@id/convert_to"
+        app:layout_constraintEnd_toStartOf="@id/convert_value_to"
+        app:layout_constraintStart_toEndOf="@id/convert_value_from"
+        app:layout_constraintTop_toBottomOf="@id/convert_from">
 
     </ImageView>
 
@@ -57,48 +63,47 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/convert_from"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/convert_from">
 
         <AutoCompleteTextView
             android:id="@+id/dropdown_convert_to"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="To"
+            android:hint="@string/convert_to_dropdown_hint"
             android:inputType="none"
             android:textSize="15sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/convert_to"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:hint="@string/currency_value_RUB"
-        android:inputType="number"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/convert_value_from">
 
-    </com.google.android.material.textfield.TextInputEditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/convert_to_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_margin="15dp"
+        android:hint="@string/convert_button_hint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/convert_to"
-        android:layout_margin="10dp"
-        android:hint="TODO">
+        app:layout_constraintTop_toBottomOf="@id/convert_to">
 
     </com.google.android.material.button.MaterialButton>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/coming_soon_message" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

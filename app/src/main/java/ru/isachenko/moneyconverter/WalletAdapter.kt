@@ -1,14 +1,13 @@
 package ru.isachenko.moneyconverter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class WalletAdapter(private val ctx: Context) :
+class WalletAdapter(ctx: Context) :
     RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
     private var currencies = emptyList<Wallet>()
@@ -25,6 +24,7 @@ class WalletAdapter(private val ctx: Context) :
     class WalletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val charCode: TextView = view.findViewById(R.id.char_code)
         val value: TextView = view.findViewById(R.id.value)
+        val name: TextView = view.findViewById(R.id.currency_name)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
@@ -35,7 +35,7 @@ class WalletAdapter(private val ctx: Context) :
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val item = currencies[position]
         holder.charCode.text = item.charCode
-        holder.value.text = String.format(ctx.getString(R.string.currency_value_RUB), item.value.toString())
-        Log.i("HOLDER", holder.value.text.toString())
+        holder.value.text = item.value.toString()
+        holder.name.text = item.name
     }
 }

@@ -3,6 +3,7 @@ package ru.isachenko.moneyconverter
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -39,6 +40,7 @@ object CurrenciesDownloader {
     //TODO
     // Check is saved data still actual
     fun asyncGet(ctx: Context, updater: (List<Wallet>) -> Unit) {
+        //TODO
         if (null != currencies) {
             updater.invoke(currencies!!)
             return
@@ -50,10 +52,18 @@ object CurrenciesDownloader {
             { response ->
                 parseJSON(response)
                 updater.invoke(currencies!!)
+                Log.i("CODES", codes().toString())
             },
             {
                 Toast.makeText(ctx as Activity, "Can't update data", Toast.LENGTH_LONG).show()
             })
         Volley.newRequestQueue(ctx).add(request)
+    }
+
+    fun codes(): List<String> {
+        if (null != currencies) {
+            return currencies!!.map { it.charCode }
+        }
+        return emptyList()
     }
 }

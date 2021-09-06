@@ -23,7 +23,8 @@ class ConverterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val items = "TODO".toCharArray().asList()
+        //val items = "TODO".toCharArray().asList()
+        val items = CurrenciesDownloader.codes()
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
         binding.dropdownConvertFrom.setAdapter(adapter)
         binding.dropdownConvertTo.setAdapter(adapter)

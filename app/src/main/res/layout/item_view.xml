@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="10dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/char_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="EUR"
-        android:textSize="25sp"
-        />
+        tools:text="RUB" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/currency_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/char_code"
+        tools:text="Российский рубль и много других букв" />
+
+    <!-- TODO reformat this-->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:textSize="25sp"
-        android:text="@string/currency_value_RUB"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/char_code"
+        app:layout_constraintEnd_toStartOf="@+id/target_currency_textview"
+        app:layout_constraintTop_toTopOf="@+id/char_code"
+        tools:text="123.123" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/target_currency_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingEnd="0dp"
+        android:text="@string/target_currency"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/value"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="RUB" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
