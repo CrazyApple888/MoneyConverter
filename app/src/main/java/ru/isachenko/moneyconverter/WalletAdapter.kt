@@ -1,6 +1,7 @@
 package ru.isachenko.moneyconverter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class WalletAdapter(private val ctx: Context) :
     override fun onBindViewHolder(holder: WalletViewHolder, position: Int) {
         val item = currencies[position]
         holder.charCode.text = item.charCode
-        holder.value.text = item.value.toString()
+        holder.value.text = String.format(ctx.getString(R.string.currency_value_RUB), item.value.toString())
+        Log.i("HOLDER", holder.value.text.toString())
     }
 }

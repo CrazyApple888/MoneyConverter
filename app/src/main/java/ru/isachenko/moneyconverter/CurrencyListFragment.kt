@@ -10,8 +10,8 @@ import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
 
 class CurrencyListFragment : Fragment() {
 
-    private var _binding: FragmentCurrencyListBinding? = null
-    private val binding get() = _binding!!
+    //private var _binding: FragmentCurrencyListBinding? = null
+    private lateinit var binding: FragmentCurrencyListBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class CurrencyListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCurrencyListBinding.inflate(inflater, container, false)
+        binding = FragmentCurrencyListBinding.inflate(inflater, container, false)
         return binding.root
     }
 

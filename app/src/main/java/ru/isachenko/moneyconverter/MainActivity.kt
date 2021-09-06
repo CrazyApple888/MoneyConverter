@@ -1,11 +1,9 @@
 package ru.isachenko.moneyconverter
 
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
 import ru.isachenko.moneyconverter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
