@@ -6,9 +6,9 @@
     <string name="coming_soon_message">Coming soon…</string>
     <string name="target_currency">RUB</string>
     <string name="convert_button_hint">Convert</string>
-    <string name="convert_to_dropdown_hint">To</string>
+    <string name="convert_to_dropdown_hint">Convert To</string>
     <string name="convert_from_dropdown_hint">From</string>
-    <string name="convert_from_hint">Amount</string>
+    <string name="convert_from_hint">RUB</string>
     <string name="default_currency_from">RUB</string>
     <string name="default_currency_to">USD</string>
     <string name="t">RUB</string>
