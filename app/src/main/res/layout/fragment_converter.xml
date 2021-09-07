@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@id/convert_value_from">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/convert_to_edit_text"
+            android:id="@+id/convertion_result_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -97,6 +97,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/convert_button"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_margin="15dp"
