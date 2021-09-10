@@ -5,10 +5,12 @@ import android.view.*
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
+import javax.sql.CommonDataSource
 
 class ConverterFragment : Fragment() {
 
     private lateinit var binding: FragmentConverterBinding
+    private lateinit var dataSource: CurrenciesSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,8 @@ class ConverterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val items = CurrenciesSource.codes()
+        dataSource = CurrenciesSource(this.requireContext())
+        val items = dataSource.codes()
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
         binding.dropdownConvertTo.setAdapter(adapter)
 
@@ -38,7 +41,7 @@ class ConverterFragment : Fragment() {
             return
         }
         val currencyTo = binding.dropdownConvertTo.editableText.toString()
-        val currencyValueTo = CurrenciesSource.currency(currencyTo)
+        val currencyValueTo = dataSource.currency(currencyTo)
         if (null != currencyValueTo) {
             //TODO limit symbols after '.' with format string
             val resultValue = valueFrom / currencyValueTo
@@ -47,6 +50,11 @@ class ConverterFragment : Fragment() {
     }
 
     private fun setResult(resultValue: Double) {
-        binding.convertionResultEditText.setText(resultValue.toString())
+        binding.convertionResultEditText.setText(
+            String.format(
+                getString(R.string.result_template),
+                resultValue
+            )
+        )
     }
 }

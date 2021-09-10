@@ -9,17 +9,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class WalletAdapter(ctx: Context) :
+class WalletAdapter(context: Context) :
     RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
     private var currencies = emptyList<Wallet>()
+    private val dataSource =  CurrenciesSource(context)
 
     init {
-        CurrenciesSource.asyncGet(ctx, updater = {
+        dataSource.asyncGet(updater = {
             currencies = it
             notifyDataSetChanged()
         }, {
-            Toast.makeText(ctx as Activity, "Can't update data", Toast.LENGTH_LONG).show()
+            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show()
         })
     }
 
