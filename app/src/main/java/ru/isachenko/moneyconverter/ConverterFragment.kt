@@ -1,8 +1,10 @@
 package ru.isachenko.moneyconverter
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
 import javax.sql.CommonDataSource
@@ -10,10 +12,20 @@ import javax.sql.CommonDataSource
 class ConverterFragment : Fragment() {
 
     private lateinit var binding: FragmentConverterBinding
-    private lateinit var dataSource: CurrenciesSource
+
+    private var currencies = emptyList<Wallet>()
+    private lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CurrenciesSource.asyncGet(updater = {
+            currencies = it
+        }, {
+            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show()
+        },
+            this.requireContext()
+        )
+        setHasOptionsMenu(true);
     }
 
     override fun onCreateView(
@@ -26,12 +38,35 @@ class ConverterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dataSource = CurrenciesSource(this.requireContext())
-        val items = dataSource.codes()
-        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
+        val items = currencies.map { it.charCode }
+        adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
         binding.dropdownConvertTo.setAdapter(adapter)
 
         binding.convertButton.setOnClickListener { convert() }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.layout_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_update_data -> {
+                CurrenciesSource.asyncGet(updater = { list ->
+                    currencies = list
+                    val items = currencies.map { it.charCode }
+                    adapter.addAll(items)
+                    Toast.makeText(requireContext(), "Data has been updated!", Toast.LENGTH_SHORT)
+                }, {
+                    Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT).show()
+                },
+                    requireContext()
+                )
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun convert() {
@@ -41,9 +76,8 @@ class ConverterFragment : Fragment() {
             return
         }
         val currencyTo = binding.dropdownConvertTo.editableText.toString()
-        val currencyValueTo = dataSource.currency(currencyTo)
+        val currencyValueTo = currencies.find { it.charCode == currencyTo }?.value
         if (null != currencyValueTo) {
-            //TODO limit symbols after '.' with format string
             val resultValue = valueFrom / currencyValueTo
             setResult(resultValue)
         }

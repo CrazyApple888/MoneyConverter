@@ -1,5 +1,6 @@
 package ru.isachenko.moneyconverter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,19 +10,21 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
+@SuppressLint("NotifyDataSetChanged")
 class WalletAdapter(context: Context) :
     RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
-    private var currencies = emptyList<Wallet>()
-    private val dataSource =  CurrenciesSource(context)
+    var currencies = emptyList<Wallet>()
 
     init {
-        dataSource.asyncGet(updater = {
+        CurrenciesSource.asyncGet(updater = {
             currencies = it
             notifyDataSetChanged()
         }, {
-            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show()
-        })
+            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_SHORT).show()
+        },
+            context
+        )
     }
 
     override fun getItemCount() = currencies.size

@@ -1,21 +1,18 @@
 package ru.isachenko.moneyconverter
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-//TODO rewrite json downloading
-class CurrenciesSource(private val context: Context) {
-    private val URL = context.getString(R.string.source_url)
+object CurrenciesSource {
     private var currencies: List<Wallet> = emptyList()
-    private val preferredCurrencies: List<String> =
-        context.resources.getStringArray(R.array.preferred_currencies).asList()
 
-    private fun parseJSON(currenciesJson: JSONObject) {
+    private fun parseJSON(currenciesJson: JSONObject, context: Context) {
+        val preferredCurrencies: List<String> =
+            context.resources.getStringArray(R.array.preferred_currencies).asList()
         val preferred = mutableListOf<Wallet>()
         //Codes of currencies
         val keys = currenciesJson.getJSONObject("Valute").keys()
@@ -51,29 +48,25 @@ class CurrenciesSource(private val context: Context) {
     // Check is saved data still actual
     fun asyncGet(
         updater: (List<Wallet>) -> Unit,
-        errorListener: Response.ErrorListener
+        errorListener: Response.ErrorListener,
+        context: Context
     ) {
-        //TODO
         if (currencies.isNotEmpty()) {
             updater.invoke(currencies)
             return
         }
+        val url = context.getString(R.string.source_url)
         val request = JsonObjectRequest(
             Request.Method.GET,
-            URL,
+            url,
             null,
             { response ->
-                parseJSON(response)
-                updater.invoke(currencies.toList())
-                Log.i("CODES", codes().toString())
+                parseJSON(response, context)
+                updater.invoke(currencies)
             },
             {
                 errorListener.onErrorResponse(it)
             })
         Volley.newRequestQueue(context).add(request)
     }
-
-    fun codes() = currencies.map { it.charCode }
-
-    fun currency(code: String) = currencies.find { it.charCode == code }?.value
 }
