@@ -3,16 +3,11 @@
     <string name="list_string">List</string>
     <string name="converter_string">Converter</string>
     <string name="currency_value_RUB">0.0</string>
-    <string name="coming_soon_message">Coming soon…</string>
     <string name="target_currency">RUB</string>
     <string name="convert_button_hint">Convert</string>
     <string name="convert_to_dropdown_hint">Convert To</string>
-    <string name="convert_from_dropdown_hint">From</string>
     <string name="convert_from_hint">RUB</string>
-    <string name="default_currency_from">RUB</string>
-    <string name="default_currency_to">USD</string>
     <string name="result_template">%.2f</string>
-    <string name="t">RUB</string>
     <string name="source_url">https://www.cbr-xml-daily.ru/daily_json.js</string>
     <string name="update">UPDATE</string>
     <string-array name="preferred_currencies">

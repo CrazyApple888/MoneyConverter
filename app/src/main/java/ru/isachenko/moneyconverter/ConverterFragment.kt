@@ -6,8 +6,9 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
-import javax.sql.CommonDataSource
+import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class ConverterFragment : Fragment() {
 
@@ -25,7 +26,7 @@ class ConverterFragment : Fragment() {
         },
             this.requireContext()
         )
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -57,7 +58,7 @@ class ConverterFragment : Fragment() {
                     currencies = list
                     val items = currencies.map { it.charCode }
                     adapter.addAll(items)
-                    Toast.makeText(requireContext(), "Data has been updated!", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Data has been updated!", Toast.LENGTH_SHORT).show()
                 }, {
                     Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT).show()
                 },

@@ -1,11 +1,16 @@
-package ru.isachenko.moneyconverter
+package ru.isachenko.moneyconverter.datasource
 
 import android.content.Context
+import android.util.Log
+import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
+import ru.isachenko.moneyconverter.R
+import ru.isachenko.moneyconverter.model.Wallet
+import ru.isachenko.moneyconverter.database.AppDatabase
 
 object CurrenciesSource {
     private var currencies: List<Wallet> = emptyList()
@@ -42,6 +47,21 @@ object CurrenciesSource {
         }
         preferred.addAll(mutableData.shuffled())
         currencies = preferred.toList()
+    }
+
+    //TODO save or update
+    fun saveData(context: Context) {
+        val db = Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "AppDatabase"
+        ).allowMainThreadQueries().build()
+        val size = db.walletDao().getWalletCount()
+        if (0 == size) {
+            db.walletDao().insertAll(*currencies.toTypedArray())
+        } else {
+            db.walletDao().updateAll(*currencies.toTypedArray())
+        }
     }
 
     //TODO

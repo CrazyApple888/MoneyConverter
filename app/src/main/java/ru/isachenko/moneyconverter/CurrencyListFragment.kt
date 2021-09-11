@@ -1,13 +1,13 @@
 package ru.isachenko.moneyconverter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import ru.isachenko.moneyconverter.adapter.WalletAdapter
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
+import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class CurrencyListFragment : Fragment() {
 
@@ -43,14 +43,15 @@ class CurrencyListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                CurrenciesSource.asyncGet(updater = {
+                /*CurrenciesSource.asyncGet(updater = {
                     adapter.currencies = it
                     adapter.notifyDataSetChanged()
                 }, {
                     Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT).show()
                 },
                     requireContext()
-                )
+                )*/
+                CurrenciesSource.saveData(requireContext())
                 true
             }
             else -> super.onOptionsItemSelected(item)

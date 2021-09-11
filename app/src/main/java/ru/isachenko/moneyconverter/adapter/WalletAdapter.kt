@@ -1,4 +1,4 @@
-package ru.isachenko.moneyconverter
+package ru.isachenko.moneyconverter.adapter
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -9,12 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import ru.isachenko.moneyconverter.datasource.CurrenciesSource
+import ru.isachenko.moneyconverter.R
+import ru.isachenko.moneyconverter.model.Wallet
 
 @SuppressLint("NotifyDataSetChanged")
 class WalletAdapter(context: Context) :
     RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
-    var currencies = emptyList<Wallet>()
+    private var currencies = emptyList<Wallet>()
 
     init {
         CurrenciesSource.asyncGet(updater = {
