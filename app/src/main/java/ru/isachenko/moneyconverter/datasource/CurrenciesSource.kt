@@ -2,6 +2,9 @@ package ru.isachenko.moneyconverter.datasource
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
@@ -10,10 +13,56 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
-import ru.isachenko.moneyconverter.database.AppDatabase
+import ru.isachenko.moneyconverter.database.WalletDatabase
+import ru.isachenko.moneyconverter.database.WalletViewModel
 
 object CurrenciesSource {
     private var currencies: List<Wallet> = emptyList()
+    private var mWalletViewModel: WalletViewModel? = null
+
+    //TODO
+    // Check is saved data still actual
+    fun asyncGet(
+        updater: (List<Wallet>) -> Unit,
+        errorListener: Response.ErrorListener,
+        context: Context
+    ) {
+        if (currencies.isNotEmpty()) {
+            updater.invoke(currencies)
+            return
+        }
+        val url = context.getString(R.string.source_url)
+        val request = JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response ->
+                parseJSON(response, context)
+                updater.invoke(currencies)
+            },
+            {
+                errorListener.onErrorResponse(it)
+            })
+        Volley.newRequestQueue(context).add(request)
+    }
+
+    //TODO save or update
+    fun saveData(context: Context) {
+        val db = Room.databaseBuilder(
+            context,
+            WalletDatabase::class.java,
+            "AppDatabase"
+        ).allowMainThreadQueries().build()
+        val size = db.walletDao().getWalletCount()
+
+        Log.i("COUUNT", size.toString())
+        //TODO rewrite
+        if (0 == size) {
+            db.walletDao().insertAll(*currencies.toTypedArray())
+        } else {
+            db.walletDao().updateAll(*currencies.toTypedArray())
+        }
+    }
 
     private fun parseJSON(currenciesJson: JSONObject, context: Context) {
         val preferredCurrencies: List<String> =
@@ -47,46 +96,5 @@ object CurrenciesSource {
         }
         preferred.addAll(mutableData.shuffled())
         currencies = preferred.toList()
-    }
-
-    //TODO save or update
-    fun saveData(context: Context) {
-        val db = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "AppDatabase"
-        ).allowMainThreadQueries().build()
-        val size = db.walletDao().getWalletCount()
-        if (0 == size) {
-            db.walletDao().insertAll(*currencies.toTypedArray())
-        } else {
-            db.walletDao().updateAll(*currencies.toTypedArray())
-        }
-    }
-
-    //TODO
-    // Check is saved data still actual
-    fun asyncGet(
-        updater: (List<Wallet>) -> Unit,
-        errorListener: Response.ErrorListener,
-        context: Context
-    ) {
-        if (currencies.isNotEmpty()) {
-            updater.invoke(currencies)
-            return
-        }
-        val url = context.getString(R.string.source_url)
-        val request = JsonObjectRequest(
-            Request.Method.GET,
-            url,
-            null,
-            { response ->
-                parseJSON(response, context)
-                updater.invoke(currencies)
-            },
-            {
-                errorListener.onErrorResponse(it)
-            })
-        Volley.newRequestQueue(context).add(request)
     }
 }

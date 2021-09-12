@@ -1,4 +1,4 @@
-package ru.isachenko.moneyconverter
+package ru.isachenko.moneyconverter.fragments
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
 import ru.isachenko.moneyconverter.datasource.CurrenciesSource
