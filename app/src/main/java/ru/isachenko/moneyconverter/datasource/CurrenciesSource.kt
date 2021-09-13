@@ -18,7 +18,6 @@ import ru.isachenko.moneyconverter.database.WalletViewModel
 
 object CurrenciesSource {
     private var currencies: List<Wallet> = emptyList()
-    private var mWalletViewModel: WalletViewModel? = null
 
     //TODO
     // Check is saved data still actual
@@ -48,7 +47,8 @@ object CurrenciesSource {
 
     //TODO save or update
     fun saveData(context: Context) {
-        val db = Room.databaseBuilder(
+        TODO()
+        /*val db = Room.databaseBuilder(
             context,
             WalletDatabase::class.java,
             "AppDatabase"
@@ -61,7 +61,7 @@ object CurrenciesSource {
             db.walletDao().insertAll(*currencies.toTypedArray())
         } else {
             db.walletDao().updateAll(*currencies.toTypedArray())
-        }
+        }*/
     }
 
     private fun parseJSON(currenciesJson: JSONObject, context: Context) {

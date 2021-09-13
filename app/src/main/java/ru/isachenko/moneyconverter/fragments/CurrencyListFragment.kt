@@ -4,15 +4,16 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.WalletAdapter
+import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
 import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class CurrencyListFragment : Fragment() {
 
-    //private var _binding: FragmentCurrencyListBinding? = null
     private lateinit var binding: FragmentCurrencyListBinding
     private lateinit var adapter: WalletAdapter
 
@@ -31,6 +32,11 @@ class CurrencyListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter = WalletAdapter(this.requireContext())
+        val viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
+        //viewModel.getData()
+        viewModel.data.observe(viewLifecycleOwner, {
+            adapter.setData(it)
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
     }

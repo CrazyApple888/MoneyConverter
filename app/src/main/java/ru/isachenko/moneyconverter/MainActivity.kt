@@ -2,8 +2,11 @@ package ru.isachenko.moneyconverter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

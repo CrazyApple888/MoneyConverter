@@ -6,17 +6,17 @@ import ru.isachenko.moneyconverter.model.Wallet
 
 @Dao
 interface WalletDao {
-    //TODO delete this
+
+    /*//TODO delete this
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg wallets: Wallet)
 
     @Query("SELECT * FROM wallet_table")
     fun getAll(): List<Wallet>
 
-
     @Update
     fun updateAll(vararg wallets: Wallet)
-
+*/
     //---------------------------------------------------------
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
