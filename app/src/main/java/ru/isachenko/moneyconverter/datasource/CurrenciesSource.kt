@@ -1,7 +1,6 @@
 package ru.isachenko.moneyconverter.datasource
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
@@ -10,7 +9,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
-import ru.isachenko.moneyconverter.database.AppDatabase
+import ru.isachenko.moneyconverter.database.WalletDatabase
 
 object CurrenciesSource {
     private var currencies: List<Wallet> = emptyList()
@@ -51,11 +50,7 @@ object CurrenciesSource {
 
     //TODO save or update
     fun saveData(context: Context) {
-        val db = Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "AppDatabase"
-        ).allowMainThreadQueries().build()
+        val db = WalletDatabase.getDatabase(context)
         val size = db.walletDao().getWalletCount()
         if (0 == size) {
             db.walletDao().insertAll(*currencies.toTypedArray())
@@ -67,10 +62,11 @@ object CurrenciesSource {
     //TODO
     // Check is saved data still actual
     fun asyncGet(
-        updater: (List<Wallet>) -> Unit,
+        context: Context,
         errorListener: Response.ErrorListener,
-        context: Context
+        updater: (List<Wallet>) -> Unit
     ) {
+        //TODO make async request to DB
         if (currencies.isNotEmpty()) {
             updater.invoke(currencies)
             return

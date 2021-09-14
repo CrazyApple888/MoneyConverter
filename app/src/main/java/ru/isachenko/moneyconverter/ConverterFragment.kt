@@ -19,13 +19,10 @@ class ConverterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CurrenciesSource.asyncGet(updater = {
-            currencies = it
-        }, {
-            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show()
-        },
-            this.requireContext()
-        )
+        CurrenciesSource.asyncGet(
+            this.requireContext(),
+            { Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show() },
+            { currencies = it })
         setHasOptionsMenu(true)
     }
 
@@ -54,16 +51,22 @@ class ConverterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                CurrenciesSource.asyncGet(updater = { list ->
-                    currencies = list
-                    val items = currencies.map { it.charCode }
-                    adapter.addAll(items)
-                    Toast.makeText(requireContext(), "Data has been updated!", Toast.LENGTH_SHORT).show()
-                }, {
-                    Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT).show()
-                },
-                    requireContext()
-                )
+                CurrenciesSource.asyncGet(
+                    this.requireContext(),
+                    {
+                        Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    { list ->
+                        currencies = list
+                        val items = currencies.map { it.charCode }
+                        adapter.addAll(items)
+                        Toast.makeText(
+                            requireContext(),
+                            "Data has been updated!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    })
                 true
             }
             else -> super.onOptionsItemSelected(item)

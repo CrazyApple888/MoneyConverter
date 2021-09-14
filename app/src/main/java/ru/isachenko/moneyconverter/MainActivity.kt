@@ -2,8 +2,11 @@ package ru.isachenko.moneyconverter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,5 +21,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomMenuBar, navController)
+
+        val viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
+
+        val data = viewModel.getListWalletLiveData()
+        viewModel.getData()
+        data.observe(this){
+            Log.i("ISACHTAG", it[0].charCode)
+        }
     }
 }

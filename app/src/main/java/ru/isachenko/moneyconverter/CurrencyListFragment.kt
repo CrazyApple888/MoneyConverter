@@ -11,7 +11,6 @@ import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class CurrencyListFragment : Fragment() {
 
-    //private var _binding: FragmentCurrencyListBinding? = null
     private lateinit var binding: FragmentCurrencyListBinding
     private lateinit var adapter: WalletAdapter
 

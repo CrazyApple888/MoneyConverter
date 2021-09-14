@@ -20,14 +20,13 @@ class WalletAdapter(context: Context) :
     private var currencies = emptyList<Wallet>()
 
     init {
-        CurrenciesSource.asyncGet(updater = {
-            currencies = it
-            notifyDataSetChanged()
-        }, {
-            Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_SHORT).show()
-        },
-            context
-        )
+        CurrenciesSource.asyncGet(
+            context,
+            { Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_SHORT).show() },
+            {
+                currencies = it
+                notifyDataSetChanged()
+            })
     }
 
     override fun getItemCount() = currencies.size
