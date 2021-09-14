@@ -1,28 +1,24 @@
 package ru.isachenko.moneyconverter
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import ru.isachenko.moneyconverter.adapter.ConverterDropdownListAdapter
+import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
-import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class ConverterFragment : Fragment() {
 
     private lateinit var binding: FragmentConverterBinding
 
     private var currencies = emptyList<Wallet>()
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: ConverterDropdownListAdapter//ArrayAdapter<String>
+    private lateinit var viewModel: WalletViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CurrenciesSource.asyncGet(
-            this.requireContext(),
-            { Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_LONG).show() },
-            { currencies = it })
         setHasOptionsMenu(true)
     }
 
@@ -36,9 +32,17 @@ class ConverterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val items = currencies.map { it.charCode }
-        adapter = ArrayAdapter(requireContext(), R.layout.dropdown_converter_item, items)
+        var items = emptyList<String>()//currencies.map { it.charCode }
+        adapter = ConverterDropdownListAdapter(requireContext(), R.layout.dropdown_converter_item, items)
         binding.dropdownConvertTo.setAdapter(adapter)
+
+        viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
+        viewModel.getListWalletLiveData().observe(viewLifecycleOwner) { list ->
+            currencies = list
+            items = list.map { it.charCode }
+            adapter.setData(items)
+        }
+        viewModel.getData()
 
         binding.convertButton.setOnClickListener { convert() }
     }
@@ -51,7 +55,7 @@ class ConverterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                CurrenciesSource.asyncGet(
+                /*CurrenciesSource.asyncGet(
                     this.requireContext(),
                     {
                         Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT)
@@ -66,7 +70,7 @@ class ConverterFragment : Fragment() {
                             "Data has been updated!",
                             Toast.LENGTH_SHORT
                         ).show()
-                    })
+                    })*/
                 true
             }
             else -> super.onOptionsItemSelected(item)

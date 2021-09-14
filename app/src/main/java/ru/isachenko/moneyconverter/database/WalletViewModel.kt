@@ -15,7 +15,10 @@ class WalletViewModel(application: Application) : AndroidViewModel(application) 
 
     private val repository: WalletRepository
     private val app = application
-    private val data = MutableLiveData<List<Wallet>>()
+
+    companion object {
+        private val data = MutableLiveData<List<Wallet>>()
+    }
 
     init {
         val walletDao = WalletDatabase.getDatabase(application).walletDao()
@@ -25,27 +28,31 @@ class WalletViewModel(application: Application) : AndroidViewModel(application) 
     fun getListWalletLiveData(): LiveData<List<Wallet>> = data
 
     fun getData() {
+        val isNotEmpty = data.value?.isNotEmpty()
+        if (isNotEmpty != null && isNotEmpty) {
+            Log.i("ISACHTAG", "GOT SAVED DATA")
+            return
+        }
         viewModelScope.launch(Dispatchers.IO) {
             val newData = repository.getData()
             if (newData.isNotEmpty()) {
                 data.postValue(newData)
-                //data.value = newData
                 Log.i("ISACHTAG", "GOT DATA FROM REPO")
                 return@launch
             }
-            RemoteSource.asyncGet(app, data) {
-                Toast.makeText(
-                    app,
-                    "Can't update data",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            reloadData()
             Log.i("ISACHTAG", "GOT DATA FROM JSON")
         }
     }
 
     fun reloadData() {
-
+        RemoteSource.asyncGet(app, data) {
+            Toast.makeText(
+                app,
+                "Can't update data",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     fun insertAll(vararg wallets: Wallet) {

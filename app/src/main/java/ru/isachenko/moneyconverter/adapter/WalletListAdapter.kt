@@ -1,33 +1,19 @@
 package ru.isachenko.moneyconverter.adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
 
 @SuppressLint("NotifyDataSetChanged")
-class WalletAdapter(context: Context) :
-    RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
+class WalletListAdapter() :
+    RecyclerView.Adapter<WalletListAdapter.WalletViewHolder>() {
 
     private var currencies = emptyList<Wallet>()
-
-    init {
-        CurrenciesSource.asyncGet(
-            context,
-            { Toast.makeText(context as Activity, "Can't update data", Toast.LENGTH_SHORT).show() },
-            {
-                currencies = it
-                notifyDataSetChanged()
-            })
-    }
 
     override fun getItemCount() = currencies.size
 
@@ -47,5 +33,10 @@ class WalletAdapter(context: Context) :
         holder.charCode.text = item.charCode
         holder.value.text = item.value.toString()
         holder.name.text = item.name
+    }
+
+    fun setData(newData: List<Wallet>) {
+        currencies = newData
+        notifyDataSetChanged()
     }
 }

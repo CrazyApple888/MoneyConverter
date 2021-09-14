@@ -4,15 +4,16 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import ru.isachenko.moneyconverter.adapter.WalletAdapter
+import ru.isachenko.moneyconverter.adapter.WalletListAdapter
+import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
-import ru.isachenko.moneyconverter.datasource.CurrenciesSource
 
 class CurrencyListFragment : Fragment() {
 
     private lateinit var binding: FragmentCurrencyListBinding
-    private lateinit var adapter: WalletAdapter
+    private lateinit var viewModel: WalletViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -28,9 +29,9 @@ class CurrencyListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = WalletAdapter(this.requireContext())
-        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+        viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
+        configureAdapter()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,10 +51,19 @@ class CurrencyListFragment : Fragment() {
                 },
                     requireContext()
                 )*/
-                CurrenciesSource.saveData(requireContext())
+                //CurrenciesSource.saveData(requireContext())
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun configureAdapter() {
+        val adapter = WalletListAdapter()
+        binding.recyclerView.adapter = adapter
+        viewModel.getListWalletLiveData().observe(viewLifecycleOwner) {
+            adapter.setData(it)
+        }
+        viewModel.getData()
     }
 }

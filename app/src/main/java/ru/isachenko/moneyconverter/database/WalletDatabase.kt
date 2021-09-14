@@ -9,14 +9,14 @@ import ru.isachenko.moneyconverter.model.Wallet
 @Database(entities = [Wallet::class], version = 1)
 abstract class WalletDatabase : RoomDatabase() {
 
-    abstract fun walletDao() : WalletDao
+    abstract fun walletDao(): WalletDao
 
     companion object {
 
         @Volatile
         private var INSTANCE: WalletDatabase? = null
 
-        fun getDatabase(context: Context) : WalletDatabase {
+        fun getDatabase(context: Context): WalletDatabase {
             val tmp = INSTANCE
             if (null != tmp) {
                 return tmp
@@ -25,13 +25,11 @@ abstract class WalletDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     WalletDatabase::class.java,
-                    "wallet_database")
-                    .allowMainThreadQueries() //TODO delete this
-                    .build()
+                    "wallet_database"
+                ).build()
                 INSTANCE = instance
                 return instance
             }
         }
     }
-
 }

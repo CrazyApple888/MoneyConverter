@@ -21,13 +21,5 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomMenuBar, navController)
-
-        val viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
-
-        val data = viewModel.getListWalletLiveData()
-        viewModel.getData()
-        data.observe(this){
-            Log.i("ISACHTAG", it[0].charCode)
-        }
     }
 }
