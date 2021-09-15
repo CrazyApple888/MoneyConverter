@@ -1,9 +1,10 @@
-package ru.isachenko.moneyconverter
+package ru.isachenko.moneyconverter.fragments
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.ConverterDropdownListAdapter
 import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.model.Wallet
@@ -33,7 +34,8 @@ class ConverterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var items = emptyList<String>()//currencies.map { it.charCode }
-        adapter = ConverterDropdownListAdapter(requireContext(), R.layout.dropdown_converter_item, items)
+        adapter = ConverterDropdownListAdapter(requireContext(),
+            R.layout.dropdown_converter_item, items)
         binding.dropdownConvertTo.setAdapter(adapter)
 
         viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
@@ -55,22 +57,7 @@ class ConverterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                /*CurrenciesSource.asyncGet(
-                    this.requireContext(),
-                    {
-                        Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT)
-                            .show()
-                    },
-                    { list ->
-                        currencies = list
-                        val items = currencies.map { it.charCode }
-                        adapter.addAll(items)
-                        Toast.makeText(
-                            requireContext(),
-                            "Data has been updated!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    })*/
+                viewModel.reloadData()
                 true
             }
             else -> super.onOptionsItemSelected(item)

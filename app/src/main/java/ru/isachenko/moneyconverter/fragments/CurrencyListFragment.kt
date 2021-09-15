@@ -1,4 +1,4 @@
-package ru.isachenko.moneyconverter
+package ru.isachenko.moneyconverter.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.WalletListAdapter
 import ru.isachenko.moneyconverter.database.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
@@ -43,15 +44,7 @@ class CurrencyListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                /*CurrenciesSource.asyncGet(updater = {
-                    adapter.currencies = it
-                    adapter.notifyDataSetChanged()
-                }, {
-                    Toast.makeText(requireContext(), "Can't update data", Toast.LENGTH_SHORT).show()
-                },
-                    requireContext()
-                )*/
-                //CurrenciesSource.saveData(requireContext())
+                viewModel.reloadData()
                 true
             }
             else -> super.onOptionsItemSelected(item)

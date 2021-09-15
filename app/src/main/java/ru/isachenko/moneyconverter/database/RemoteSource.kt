@@ -1,6 +1,6 @@
 package ru.isachenko.moneyconverter.database
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.Response
@@ -13,7 +13,7 @@ import ru.isachenko.moneyconverter.util.Util
 object RemoteSource {
 
     fun asyncGet(
-        context: Context,
+        context: Application,
         data: MutableLiveData<List<Wallet>>,
         errorListener: Response.ErrorListener
     ) {

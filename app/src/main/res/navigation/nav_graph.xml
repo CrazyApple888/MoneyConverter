@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/converterFragment"
-        android:name="ru.isachenko.moneyconverter.ConverterFragment"
+        android:name="ru.isachenko.moneyconverter.fragments.ConverterFragment"
         android:label="fragment_converter"
         tools:layout="@layout/fragment_converter" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/currencyListFragment"
-        android:name="ru.isachenko.moneyconverter.CurrencyListFragment"
+        android:name="ru.isachenko.moneyconverter.fragments.CurrencyListFragment"
         android:label="fragment_currency_list"
         tools:layout="@layout/fragment_currency_list" >
         <action

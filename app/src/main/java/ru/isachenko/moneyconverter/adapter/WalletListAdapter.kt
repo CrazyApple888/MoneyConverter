@@ -10,7 +10,7 @@ import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
 
 @SuppressLint("NotifyDataSetChanged")
-class WalletListAdapter() :
+class WalletListAdapter :
     RecyclerView.Adapter<WalletListAdapter.WalletViewHolder>() {
 
     private var currencies = emptyList<Wallet>()
