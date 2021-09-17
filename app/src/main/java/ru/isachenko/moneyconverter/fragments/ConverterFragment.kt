@@ -1,22 +1,27 @@
 package ru.isachenko.moneyconverter.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.ConverterDropdownListAdapter
-import ru.isachenko.moneyconverter.database.WalletViewModel
+import ru.isachenko.moneyconverter.viewmodel.WalletViewModel
 import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
+import ru.isachenko.moneyconverter.viewmodel.ConverterViewModel
 
 class ConverterFragment : Fragment() {
 
     private lateinit var binding: FragmentConverterBinding
 
     private var currencies = emptyList<Wallet>()
-    private lateinit var adapter: ConverterDropdownListAdapter//ArrayAdapter<String>
-    private lateinit var viewModel: WalletViewModel
+    private lateinit var adapter: ConverterDropdownListAdapter
+    private lateinit var walletViewModel: WalletViewModel
+    private lateinit var converterViewModel: ConverterViewModel
+    private var inputMethodManager: InputMethodManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +38,24 @@ class ConverterFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var items = emptyList<String>()//currencies.map { it.charCode }
-        adapter = ConverterDropdownListAdapter(requireContext(),
-            R.layout.dropdown_converter_item, items)
+        var items = emptyList<String>()
+        adapter = ConverterDropdownListAdapter(
+            requireContext(),
+            R.layout.dropdown_converter_item, items
+        )
         binding.dropdownConvertTo.setAdapter(adapter)
 
-        viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
-        viewModel.getListWalletLiveData().observe(viewLifecycleOwner) { list ->
+        walletViewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
+        walletViewModel.data.observe(viewLifecycleOwner) { list ->
             currencies = list
             items = list.map { it.charCode }
             adapter.setData(items)
         }
-        viewModel.getData()
+        walletViewModel.getData()
 
-        binding.convertButton.setOnClickListener { convert() }
+        converterViewModel = ViewModelProvider(this).get(ConverterViewModel::class.java)
+        setResult(converterViewModel.convertionResult)
+        binding.convertButton.setOnClickListener { clickListener() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -57,33 +66,32 @@ class ConverterFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {
-                viewModel.reloadData()
+                walletViewModel.reloadData()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun convert() {
+    private fun clickListener() {
+        if (null == inputMethodManager) {
+            inputMethodManager =
+                context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        }
+        inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
+        view?.clearFocus()
+
         val valueFrom = binding.convertFromEditText.text.toString().toDoubleOrNull()
-        if (null == valueFrom) {
-            setResult(0.0)
-            return
-        }
-        val currencyTo = binding.dropdownConvertTo.editableText.toString()
-        val currencyValueTo = currencies.find { it.charCode == currencyTo }?.value
-        if (null != currencyValueTo) {
-            val resultValue = valueFrom / currencyValueTo
-            setResult(resultValue)
-        }
+        val currencyValueTo =
+            currencies.find { it.charCode == binding.dropdownConvertTo.editableText.toString() }?.value
+        converterViewModel.convert(valueFrom, currencyValueTo)
+        setResult(converterViewModel.convertionResult)
     }
 
     private fun setResult(resultValue: Double) {
-        binding.convertionResultEditText.setText(
-            String.format(
-                getString(R.string.result_template),
-                resultValue
-            )
+        binding.convertToResult.text = String.format(
+            getString(R.string.result_template),
+            resultValue
         )
     }
 }

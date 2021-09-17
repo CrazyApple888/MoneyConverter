@@ -8,5 +8,8 @@ import androidx.room.PrimaryKey
 data class Wallet(
     @PrimaryKey val charCode: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "value") val value: Double
-)
+    @ColumnInfo(name = "value") val value: Double,
+    @ColumnInfo(name = "previousValue") val previousValue: Double
+) {
+    fun isNewValueGreater() = value > previousValue
+}

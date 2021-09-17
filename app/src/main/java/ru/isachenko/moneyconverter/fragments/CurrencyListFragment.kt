@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.WalletListAdapter
-import ru.isachenko.moneyconverter.database.WalletViewModel
+import ru.isachenko.moneyconverter.viewmodel.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
 
 class CurrencyListFragment : Fragment() {
@@ -52,9 +52,10 @@ class CurrencyListFragment : Fragment() {
     }
 
     private fun configureAdapter() {
-        val adapter = WalletListAdapter()
+        val template = getString(R.string.result_template)
+        val adapter = WalletListAdapter(template)
         binding.recyclerView.adapter = adapter
-        viewModel.getListWalletLiveData().observe(viewLifecycleOwner) {
+        viewModel.data.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
         viewModel.getData()

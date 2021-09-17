@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name">Money Converter</string>
-    <string name="list_string">List</string>
-    <string name="converter_string">Converter</string>
-    <string name="currency_value_RUB">0.0</string>
+    <string name="list_string">Валюты</string>
+    <string name="converter_string">Конвертер</string>
+    <string name="currency_value_RUB">0.00</string>
     <string name="target_currency">RUB</string>
-    <string name="convert_button_hint">Convert</string>
-    <string name="convert_to_dropdown_hint">Convert To</string>
-    <string name="convert_from_hint">RUB</string>
+    <string name="convert_button_hint">Конвертировать</string>
+    <string name="convert_to_dropdown_hint">Выберите валюту</string>
+    <string name="convert_from_hint">Сумма в рублях</string>
     <string name="result_template">%.2f</string>
     <string name="source_url">https://www.cbr-xml-daily.ru/daily_json.js</string>
     <string name="update">UPDATE</string>
+    <string name="update_successful_message">Данные успешно обновлены</string>
+    <string name="update_failure_message">Не удалось обновить данные</string>
     <string-array name="preferred_currencies">
         <item>USD</item>
         <item>EUR</item>

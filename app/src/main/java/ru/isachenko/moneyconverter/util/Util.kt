@@ -23,7 +23,8 @@ object Util {
                     Wallet(
                         charCode,
                         currentCurrency.getString("Name"),
-                        currentCurrency.getDouble("Value")
+                        currentCurrency.getDouble("Value"),
+                        currentCurrency.getDouble("Previous")
                     )
                 )
                 continue
@@ -32,11 +33,12 @@ object Util {
                 Wallet(
                     charCode,
                     currentCurrency.getString("Name"),
-                    currentCurrency.getDouble("Value")
+                    currentCurrency.getDouble("Value"),
+                    currentCurrency.getDouble("Previous")
                 )
             )
         }
-        preferred.addAll(mutableData.shuffled())
+        preferred.addAll(mutableData)
         return preferred.toList()
     }
 }
