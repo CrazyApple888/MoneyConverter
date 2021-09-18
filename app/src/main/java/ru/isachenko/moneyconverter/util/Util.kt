@@ -5,6 +5,9 @@ import ru.isachenko.moneyconverter.model.Wallet
 
 object Util {
 
+    const val LOG_TAG = "ISACHTAG"
+    const val SHARED_PREFERENCES_NAME = "lastUpdate"
+
     fun parseJSON(
         currenciesJson: JSONObject,
         preferredCurrencies: List<String>

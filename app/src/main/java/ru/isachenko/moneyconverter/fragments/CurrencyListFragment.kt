@@ -1,6 +1,5 @@
 package ru.isachenko.moneyconverter.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.adapter.WalletListAdapter
-import ru.isachenko.moneyconverter.viewmodel.WalletViewModel
 import ru.isachenko.moneyconverter.databinding.FragmentCurrencyListBinding
+import ru.isachenko.moneyconverter.viewmodel.WalletViewModel
 
 class CurrencyListFragment : Fragment() {
 
@@ -40,7 +39,6 @@ class CurrencyListFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_update_data -> {

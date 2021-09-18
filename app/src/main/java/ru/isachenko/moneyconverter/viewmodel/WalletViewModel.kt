@@ -13,6 +13,7 @@ import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.database.WalletDatabase
 import ru.isachenko.moneyconverter.database.WalletRepository
 import ru.isachenko.moneyconverter.model.Wallet
+import ru.isachenko.moneyconverter.util.Util.LOG_TAG
 
 class WalletViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -34,14 +35,14 @@ class WalletViewModel(application: Application) : AndroidViewModel(application) 
         successMessage = Toast.makeText(app, successMessageString, Toast.LENGTH_SHORT)
         val walletDao = WalletDatabase.getDatabase(application).walletDao()
         repository = WalletRepository(walletDao)
-        Log.i("ISACHTAG", "VM INIT")
+        Log.i(LOG_TAG, "VM INIT")
     }
 
 
     fun getData() {
         val isNotEmpty = data.value?.isNotEmpty()
         if (isNotEmpty != null && isNotEmpty) {
-            Log.i("ISACHTAG", "GOT SAVED DATA")
+            Log.i(LOG_TAG, "GOT SAVED DATA")
             return
         }
         viewModelScope.launch(Dispatchers.IO) {
@@ -56,7 +57,7 @@ class WalletViewModel(application: Application) : AndroidViewModel(application) 
     fun insertAll(vararg wallets: Wallet) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.insertAll(*wallets)
-            Log.i("ISACHTAG", "DATA SAVED IN REPO")
+            Log.i(LOG_TAG, "DATA SAVED IN REPO")
         }
     }
 }

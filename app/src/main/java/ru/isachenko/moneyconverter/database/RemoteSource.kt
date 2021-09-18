@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.util.Util
+import ru.isachenko.moneyconverter.util.Util.LOG_TAG
 
 object RemoteSource {
 
@@ -33,7 +34,7 @@ object RemoteSource {
                     context.resources.getStringArray(R.array.preferred_currencies).asList()
                 data.postValue(Util.parseJSON(response, preferredCurrencies))
                 successToast.show()
-                Log.i("ISACHTAG", "GOT DATA FROM JSON")
+                Log.i(LOG_TAG, "GOT DATA FROM JSON")
             },
             {
                 errorListener.onErrorResponse(it)

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Response
 import ru.isachenko.moneyconverter.model.Wallet
+import ru.isachenko.moneyconverter.util.Util.LOG_TAG
 import javax.inject.Singleton
 
 @Singleton
@@ -25,7 +26,7 @@ class WalletRepository(private val walletDao: WalletDao) {
     ) {
         if (0 != walletDao.getWalletCount().or(0)) {
             data.postValue(walletDao.getAll())
-            Log.i("ISACHTAG", "GOT DATA FROM REPO")
+            Log.i(LOG_TAG, "GOT DATA FROM REPO")
             return
         }
         RemoteSource.asyncGet(appContext, data, errorListener, successMessage)
