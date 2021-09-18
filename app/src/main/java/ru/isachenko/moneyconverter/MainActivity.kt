@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Updates currencies if prev update was before current day
-    // Once a day, because JSON updates per day
+    // Once a day, because JSON updates every day
     @SuppressLint("SimpleDateFormat")
     private fun checkCurrencyActualityAndUpdate() {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy")
