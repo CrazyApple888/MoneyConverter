@@ -1,11 +1,14 @@
 package ru.isachenko.moneyconverter.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.ColorFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.isachenko.moneyconverter.R
 import ru.isachenko.moneyconverter.model.Wallet
@@ -35,13 +38,13 @@ class WalletListAdapter(private val template: String) :
         holder.charCode.text = item.charCode
         holder.value.text = String.format(template, item.value)
         holder.name.text = item.name
-        holder.imageArrow.setImageResource(
-            if (item.isNewValueGreater()) {
-                R.drawable.ic_stonks
-            } else {
-                R.drawable.ic_not_stonks
-            }
-        )
+        if (item.isNewValueGreater()) {
+            holder.imageArrow.setImageResource(R.drawable.ic_stonks)
+            holder.imageArrow.setColorFilter(Color.rgb(19, 225,19))
+        } else {
+            holder.imageArrow.setImageResource(R.drawable.ic_not_stonks)
+            holder.imageArrow.setColorFilter(Color.rgb(255, 0, 0))
+        }
     }
 
     fun setData(newData: List<Wallet>) {
