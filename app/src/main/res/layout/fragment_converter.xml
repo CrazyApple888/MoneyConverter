@@ -49,28 +49,9 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--<com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/convert_to"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="@string/currency_value_RUB"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/convert_value_to">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/convertion_result_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none" />
-
-        </com.google.android.material.textfield.TextInputLayout>-->
-
         <com.google.android.material.textview.MaterialTextView
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/convert_to_result"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

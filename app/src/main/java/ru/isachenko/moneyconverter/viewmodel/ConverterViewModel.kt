@@ -4,15 +4,16 @@ import androidx.lifecycle.ViewModel
 
 class ConverterViewModel : ViewModel() {
 
-    var convertionResult: Double = 0.0
+    var conversionResult: Double = 0.0
+    var charCode: String = ""
 
     fun convert(valueFrom: Double?, currency: Double?) {
         if (null == valueFrom) {
-            convertionResult = 0.0
+            conversionResult = 0.0
             return
         }
         if (null != currency) {
-            convertionResult = valueFrom / currency
+            conversionResult = valueFrom / currency
         }
     }
 }

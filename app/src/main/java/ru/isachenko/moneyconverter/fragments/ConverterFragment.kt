@@ -54,7 +54,7 @@ class ConverterFragment : Fragment() {
         walletViewModel.getData()
 
         converterViewModel = ViewModelProvider(this).get(ConverterViewModel::class.java)
-        setResult(converterViewModel.convertionResult)
+        setResult(converterViewModel.conversionResult)
         binding.convertButton.setOnClickListener { clickListener() }
     }
 
@@ -82,16 +82,17 @@ class ConverterFragment : Fragment() {
         view?.clearFocus()
 
         val valueFrom = binding.convertFromEditText.text.toString().toDoubleOrNull()
+        converterViewModel.charCode = binding.dropdownConvertTo.editableText.toString()
         val currencyValueTo =
-            currencies.find { it.charCode == binding.dropdownConvertTo.editableText.toString() }?.value
+            currencies.find { it.charCode == converterViewModel.charCode }?.value
         converterViewModel.convert(valueFrom, currencyValueTo)
-        setResult(converterViewModel.convertionResult)
+        setResult(converterViewModel.conversionResult)
     }
 
     private fun setResult(resultValue: Double) {
         binding.convertToResult.text = String.format(
             getString(R.string.result_template),
-            resultValue, binding.dropdownConvertTo.editableText.toString()
+            resultValue, converterViewModel.charCode
         )
     }
 }

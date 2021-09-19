@@ -4,13 +4,11 @@
         android:id="@+id/currencyListFragment"
         android:enabled="true"
         android:icon="@drawable/ic_wallet_list"
-        android:title="@string/list_string"
-        />
+        android:title="@string/list_string" />
 
     <item
         android:id="@+id/converterFragment"
         android:enabled="true"
         android:icon="@drawable/ic_converter"
-        android:title="@string/converter_string"
-        />
+        android:title="@string/converter_string" />
 </menu>
