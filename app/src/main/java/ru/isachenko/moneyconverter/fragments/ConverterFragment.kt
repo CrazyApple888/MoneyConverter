@@ -91,7 +91,7 @@ class ConverterFragment : Fragment() {
     private fun setResult(resultValue: Double) {
         binding.convertToResult.text = String.format(
             getString(R.string.result_template),
-            resultValue
+            resultValue, binding.dropdownConvertTo.editableText.toString()
         )
     }
 }

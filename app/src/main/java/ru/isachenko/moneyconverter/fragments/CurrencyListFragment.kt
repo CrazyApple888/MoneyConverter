@@ -50,7 +50,7 @@ class CurrencyListFragment : Fragment() {
     }
 
     private fun configureAdapter() {
-        val template = getString(R.string.result_template)
+        val template = getString(R.string.value_template)
         val adapter = WalletListAdapter(template)
         binding.recyclerView.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) {
