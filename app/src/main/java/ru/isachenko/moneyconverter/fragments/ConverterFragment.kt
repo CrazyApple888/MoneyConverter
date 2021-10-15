@@ -2,6 +2,7 @@ package ru.isachenko.moneyconverter.fragments
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import ru.isachenko.moneyconverter.adapter.ConverterDropdownListAdapter
 import ru.isachenko.moneyconverter.viewmodel.WalletViewModel
 import ru.isachenko.moneyconverter.model.Wallet
 import ru.isachenko.moneyconverter.databinding.FragmentConverterBinding
+import ru.isachenko.moneyconverter.util.Util.LOG_TAG
 import ru.isachenko.moneyconverter.viewmodel.ConverterViewModel
 
 class ConverterFragment : Fragment() {
@@ -85,7 +87,11 @@ class ConverterFragment : Fragment() {
         converterViewModel.charCode = binding.dropdownConvertTo.editableText.toString()
         val currencyValueTo =
             currencies.find { it.charCode == converterViewModel.charCode }?.value
-        converterViewModel.convert(valueFrom, currencyValueTo)
+        try {
+            converterViewModel.convert(valueFrom, currencyValueTo)
+        } catch (exc: IllegalArgumentException) {
+            Log.e(LOG_TAG, "Currency of ${converterViewModel.charCode} is 0")
+        }
         setResult(converterViewModel.conversionResult)
     }
 

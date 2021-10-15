@@ -13,6 +13,10 @@ class ConverterViewModel : ViewModel() {
             return
         }
         if (null != currency) {
+            if (0.0 >= currency) {
+                conversionResult = 0.0
+                throw IllegalArgumentException()
+            }
             conversionResult = valueFrom / currency
         }
     }
